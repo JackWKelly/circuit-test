@@ -3,6 +3,9 @@ const circuit = require('circuit-sdk');
 
 barrybot = function(){
 
+    const routes = require('./routes');
+    const controller = require('./controller');
+    const services = require('./services');
     const self = this;
     let client;
 
