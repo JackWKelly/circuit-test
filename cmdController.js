@@ -1,16 +1,13 @@
 "use strict";
 
+//commands to be looped t hrough
+const commands = [
+    require('./commands/helloWorld'),
+    require('./commands/demo'),
+    require('./commands/time')
+];
+
 module.exports = function(client, item){
-    const reply = function(item){
-        if (!sentByMe(item)) {
-            let comment = {
-            convId: item.convId,
-            parentId: item.parentId,
-            content: "Hello world!"
-            };
-            sendMessage(comment);
-        }
-    };
     
     //helper from docs
     const sentByMe = function sentByMe(item){
@@ -22,7 +19,24 @@ module.exports = function(client, item){
     };
     
     //logic here
-
-    reply(item);
+    if (!sentByMe(item)) {
+        let output;
+        for(let i = 0; i < commands.length; i++){
+            if(commands[i].trigger === item.text.content){
+                output = commands[i].payload()
+                .then(output => {
+                    let comment = {
+                        convId: item.convId,
+                        parentId: item.parentId,
+                        content: output
+                    };
+                    sendMessage(comment);
+                    return;
+                })
+            
+            }
+        }
+    };
+    
 
 }

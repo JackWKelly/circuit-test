@@ -1,5 +1,6 @@
 "use strict";
 
+//secret contains a json with client_id, client_secret and domain
 const secret = require('./secret');
 const circuit = require('circuit-sdk');
 const cmdControllerModule = require('./cmdController');
@@ -8,6 +9,7 @@ class barrybot{
 
     constructor(){
         this.cmdController = cmdControllerModule;
+        //set client data to predefined secret data
         this.client = new circuit.Client({
             client_id: secret.client_id,
             client_secret: secret.client_secret,
@@ -36,15 +38,16 @@ class barrybot{
     };
 
     //basically copied from docs
+    //set event callbacks for this client
+    //use fat arrows to keep "this" context
     addEventListeners(){
-        //set event callbacks for this client
-        this.client.addEventListener('connectionStateChanged', function (evt) {
+        this.client.addEventListener('connectionStateChanged', (evt) => {
             console.log(evt);
         });
-        this.client.addEventListener('registrationStateChanged', function (evt) {
+        this.client.addEventListener('registrationStateChanged', (evt) => {
             console.log(evt);
         });
-        this.client.addEventListener('reconnectFailed', function (evt) {
+        this.client.addEventListener('reconnectFailed', (evt) => {
             console.log(evt);
         });
         this.client.addEventListener('itemAdded', (evt) => {
