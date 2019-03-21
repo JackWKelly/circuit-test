@@ -14,7 +14,10 @@ module.exports = {
 class convTest{
 
     constructor(){
-        this.trigger = "!conv";
+        this.triggerPhrase = "!conv"
+        this.trigger = function(item){
+            return (item === this.triggerPhrase);
+        };
         this.state = 0;
         this.payload = async function(){           
             let output = this.statechecker();

@@ -28,7 +28,7 @@ module.exports = function(client, item){
 
         //check if there's a currently active conversation instance for this input first
         for(let i = 0; i < conversations.length; i++){
-            if(conversations[i].trigger === item.text.content){
+            if(conversations[i].trigger(item.text.content)){
                 conversations[i].payload(item)
                 .then(output => {
                     //gotta love javascript, apparantly this is how you check for strings
