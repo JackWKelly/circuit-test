@@ -5,7 +5,8 @@ const commands = [
     require('./commands/helloWorld'),
     require('./commands/demo'),
     require('./commands/time'),
-    require('./commands/conversation')
+    require('./commands/conversation'),
+    require('./commands/codesave')
 ];
 
 //multi stage commands create one of these to store state while waiting for input

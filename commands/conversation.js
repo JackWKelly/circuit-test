@@ -14,7 +14,7 @@ module.exports = {
 class convTest{
 
     constructor(){
-        this.triggerPhrase = "!conv"
+        this.triggerPhrase = "!conv";
         this.trigger = function(item){
             return (item === this.triggerPhrase);
         };
