@@ -18,6 +18,7 @@ class convTest{
         this.trigger = function(item){
             return (item === this.triggerPhrase);
         };
+        this.completionState = 3;
         this.state = 0;
         this.payload = async function(){           
             let output = this.statechecker();
@@ -31,8 +32,10 @@ class convTest{
                     return("State 1!");
                 case 1:
                     return("State 2!");
-                default:
+                case 2:
                     return("and so on...");
+                default:
+                    return("How did you get here?");
             };
         }
 

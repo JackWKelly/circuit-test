@@ -6,7 +6,8 @@ const commands = [
     require('./commands/demo'),
     require('./commands/time'),
     require('./commands/conversation'),
-    require('./commands/codesave')
+    require('./commands/codesave'),
+    require('./commands/convoCalculator')
 ];
 
 //multi stage commands create one of these to store state while waiting for input
@@ -26,6 +27,18 @@ module.exports = function(client, item){
     
     //logic here
     if (!sentByMe(item)) {
+
+        let convUsed = false; //tracks if a conversation commands has been used, refactor later
+
+        //remove any completed conversations
+        if(conversations.length > 0){
+            //reverse through the array as to not cause shifts in element numbers while we're checking
+            for(let i = (conversations.length -1); i >= 0 ; i--){
+                if(conversations[i].state >= conversations[i].completionState){
+                    conversations.splice(i, 1);
+                };
+            };
+        }
 
         //check if there's a currently active conversation instance for this input first
         for(let i = 0; i < conversations.length; i++){
@@ -47,10 +60,15 @@ module.exports = function(client, item){
                 .catch(error => {
                     console.log(error);
                 });
-                return;
+                convUsed = true;
             
             }
         };
+
+        //don't check commands if a conversation has been used instead, to prevent duplicates (refactor later)
+        if(convUsed){
+            return;
+        }
 
         //if not, check commands normally
         for(let i = 0; i < commands.length; i++){

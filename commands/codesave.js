@@ -21,6 +21,7 @@ class convTest{
         this.snippet = {};
 
         this.state = 0;
+        this.completionState = 4;
         this.payload = async function(item){          
             let output = this.statechecker(item);
             return output;
