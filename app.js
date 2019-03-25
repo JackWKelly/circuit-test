@@ -5,6 +5,10 @@ const secret = require('./secret');
 const circuit = require('circuit-sdk');
 const cmdControllerModule = require('./cmdController');
 
+// MF: Use Title Case for classes - BarryBot
+// MF: This convention allows us to easily differentiate between classes and variables
+// MF: Also use an auto-formatter - this keeps the files in consistent formats
+// MF: (it will add spaces and indents to improve readability)
 class barrybot{
 
     constructor(){
