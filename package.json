@@ -18,6 +18,7 @@
   "homepage": "https://github.com/JackWKelly/circuit-test#readme",
   "dependencies": {
     "axios": "^0.18.0",
+    "bluebird": "^3.5.3",
     "circuit-sdk": "^1.2.5201",
     "mongodb": "^3.2.1"
   }

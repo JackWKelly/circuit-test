@@ -4,15 +4,15 @@ const secret = require('./secret');
 const circuit = require('circuit-sdk');
 
 // Define the command controller - the base controller that handles the logic
-const cmdController = require('./cmdController');
+const cmdController = require('./example-cmdController');
 
 // Define the function to set up our client with event listeners
 function addEventListeners(client) {
     client.addEventListener('itemAdded', (evt) => {
-        cmdController(client, evt.item);
+        cmdController.respond(client, evt.item);
     });
     client.addEventListener('itemUpdated', (evt) => {
-        cmdController(client, evt.item);
+        cmdController.respond(client, evt.item);
     });
 }
 
