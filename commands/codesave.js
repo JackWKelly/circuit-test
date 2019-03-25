@@ -6,12 +6,12 @@ module.exports = {
     trigger: "!codesave",
 
     payload: async function(item){
-        return new convTest;
+        return new convCodeSave;
     }
 
 }
 
-class convTest{
+class convCodeSave{
 
     constructor(){
         this.trigger = function(item){
@@ -54,7 +54,7 @@ class convTest{
                     break;
                 default:
                     output = "You find yourself in a unknown, scary place. How did you get here?";
-                    this.state++;
+                    this.state = 4;
                     break;
             };
             return output;

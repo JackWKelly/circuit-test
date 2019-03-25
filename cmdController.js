@@ -7,7 +7,8 @@ const commands = [
     require('./commands/time'),
     require('./commands/conversation'),
     require('./commands/codesave'),
-    require('./commands/convoCalculator')
+    require('./commands/convoCalculator'),
+    require('./commands/monsterFighter')
 ];
 
 //multi stage commands create one of these to store state while waiting for input
@@ -21,12 +22,14 @@ module.exports = function(client, item){
     };
     
     const sendMessage = function(item){
-        console.log(item.content);
+        //console.log(item.content);
         return client.addTextItem(item.convId, item.content);
     };
     
     //logic here
     if (!sentByMe(item)) {
+
+        //console.log(conversations);
 
         let convUsed = false; //tracks if a conversation commands has been used, refactor later
 
@@ -34,7 +37,7 @@ module.exports = function(client, item){
         if(conversations.length > 0){
             //reverse through the array as to not cause shifts in element numbers while we're checking
             for(let i = (conversations.length -1); i >= 0 ; i--){
-                if(conversations[i].state >= conversations[i].completionState){
+                if(conversations[i].state === conversations[i].completionState){
                     conversations.splice(i, 1);
                 };
             };
@@ -42,7 +45,7 @@ module.exports = function(client, item){
 
         //check if there's a currently active conversation instance for this input first
         for(let i = 0; i < conversations.length; i++){
-            if(conversations[i].trigger(item.text.content)){
+            if(conversations[i].trigger(item)){
                 conversations[i].payload(item)
                 .then(output => {
                     //gotta love javascript, apparantly this is how you check for strings

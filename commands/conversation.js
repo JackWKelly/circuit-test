@@ -16,7 +16,7 @@ class convTest{
     constructor(){
         this.triggerPhrase = "!conv";
         this.trigger = function(item){
-            return (item === this.triggerPhrase);
+            return (item.text.content === this.triggerPhrase);
         };
         this.completionState = 3;
         this.state = 0;
@@ -35,6 +35,7 @@ class convTest{
                 case 2:
                     return("and so on...");
                 default:
+                    this.state = 3;
                     return("How did you get here?");
             };
         }

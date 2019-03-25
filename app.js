@@ -42,20 +42,20 @@ class barrybot{
     //use fat arrows to keep "this" context
     addEventListeners(){
         this.client.addEventListener('connectionStateChanged', (evt) => {
-            console.log(evt);
+            //console.log(evt);
         });
         this.client.addEventListener('registrationStateChanged', (evt) => {
-            console.log(evt);
+            //console.log(evt);
         });
         this.client.addEventListener('reconnectFailed', (evt) => {
-            console.log(evt);
+            //console.log(evt);
         });
         this.client.addEventListener('itemAdded', (evt) => {
-            console.log(evt);
+            //console.log(evt);
             this.cmdController(this.client, evt.item);
         });
         this.client.addEventListener('itemUpdated', (evt) => {
-            console.log(evt);
+            //console.log(evt);
             this.cmdController(this.client, evt.item);
         });
     }
