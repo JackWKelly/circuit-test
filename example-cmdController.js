@@ -65,7 +65,7 @@ exports.respond = (client, item) => {
                             content: response,
                             parentId: item.parentItemId
                         }
-                    }
+                    };
 
                     return responseItem;
                 })
