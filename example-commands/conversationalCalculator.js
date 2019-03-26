@@ -16,12 +16,16 @@ module.exports = class ConversationCommand extends Context {
         }
         this.step = this.steps.INITIALIZE;
 
+        //variables that user input is inserted into
+        //used in final calculation
         this.n1 = null;
         this.op = null;
         this.n2 = null;
     }
 
-    //
+    //validates input based on step state
+    //inputs data to calculation variables
+    //outputs calculation answer
     handleMessage(item) {
 
 
@@ -37,6 +41,7 @@ module.exports = class ConversationCommand extends Context {
         //value outputted to the user depending on step state
         var response = null;
 
+        //does this switch statement need documentation or is it self explanatory enough?
         switch(this.step) {
             case this.steps.INITIALIZE: 
                 response = "What is the first number in your calculation?";
@@ -68,7 +73,7 @@ module.exports = class ConversationCommand extends Context {
         return Promise.resolve(response);
     }
 
-    //pet step input validation, empty returns are a pass
+    //per step input validation, empty returns are a pass
     //returned strings are outputted to the user
     //not sure if the redundant 'breaks' should be kept
     validate(item){
@@ -100,7 +105,7 @@ module.exports = class ConversationCommand extends Context {
         }
     }
 
-    //quick calculation function, called at the end of the conversation
+    //calculation function, called at the end of the conversation
     calculate() {
         let answer;
             switch(this.op){
