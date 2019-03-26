@@ -1,9 +1,4 @@
-const MongoClient = require('mongodb').MongoClient;
-const assert = require('assert');
-
-const url = 'mongodb://localhost:27017';
-const dbName = 'monsterFight';
-const client = new MongoClient(url);
+const services = require('./monsterFighterServices');
 
 //This command isn't feature complete yet, but all the systems in it interact as they would do when done
 
@@ -25,13 +20,6 @@ class convMonsterFighter{
         //contains each portion of the input command as an array, updated by the trigger
         //maybe make a psuedo-enum set for positions in the array?
         let itemArr;
-
-        //start mongoDB
-        client.connect(function(err){
-            assert.equal(null, err);
-            const db = client.db(dbName);
-            //client.close();
-        });
 
         this.trigger = function(item){
             //check if first word in string is the prefix command
@@ -88,6 +76,13 @@ class convMonsterFighter{
                                 reject("Invalid command.");
                                 break;
                         };
+                    case this.states.NEWUSER:
+                        //requires a name input be present
+                        if(this.itemArr[1]){
+                            resolve();
+                        } else {
+                            reject("Your new character needs a name!");
+                        }
                     //for message only states, in theory all others should reject when needed
                     default:
                         resolve();
@@ -109,19 +104,24 @@ class convMonsterFighter{
                     this.state = this.states.GAMESELECT;
                     break;
                 case this.states.GAMESELECT:
-                switch(this.itemArr[1]){
-                    case "view":
-                    case "battle":
-                        output = "view/battle";
-                        break;
-                    case "new":
-                        output = "New adventurer creation: Send a command with your adventurer's name!";
-                        this.state = this.states.NEWUSER;
-                        break;
-                    default:
-                        output = "Invalid command passed validation, time to panic!";
-                        break;
-                };
+                    switch(this.itemArr[1]){
+                        case "view":
+                        case "battle":
+                            output = "view/battle";
+                            break;
+                        case "new":
+                            output = "New adventurer creation: Send a command with your adventurer's name!";
+                            this.state = this.states.NEWUSER;
+                            break;
+                        default:
+                            output = "Invalid command passed validation, time to panic!";
+                            break;
+                    };
+                    break;
+                //has it's own state in preperation for additional features further down the line
+                case this.states.NEWUSER:
+                    //db stuff here
+                    output = "new user";
                     break;
                 default:
                     output = "You find yourself in a unknown, scary place. How did you get here?";
@@ -134,11 +134,3 @@ class convMonsterFighter{
     }
 
 }
-
-/*
-client.connect(function(err){
-                        assert.equal(null, err);
-                        const db = client.db(dbName);
-                        client.close();
-                    })
-                    */
