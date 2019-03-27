@@ -5,7 +5,9 @@ var Promise = require("bluebird");
 const commands = {
     "!hello": require('./example-commands/helloWorld'),
     "!conv": require('./example-commands/conversation'),
-    "!calc": require('./example-commands/conversationalCalculator')
+    "!calc": require('./example-commands/conversationalCalculator'),
+    "!mf": require('./example-commands/monsterFighter/monsterFighter'),
+    "!time": require('./example-commands/time')
 }
 
 // We will use a dictionary to manage users conversational contexts

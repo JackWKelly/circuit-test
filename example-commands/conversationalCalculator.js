@@ -35,7 +35,7 @@ module.exports = class ConversationCommand extends Context {
         //empty returns are a pass, otherwise pass the error to the user
         let validErr = this.validate(item);
         if (validErr){
-            return Promise.resolve(validErr);
+            return (validErr);
         }
 
         //value outputted to the user depending on step state
@@ -70,7 +70,7 @@ module.exports = class ConversationCommand extends Context {
         }
 
         // Return the response
-        return Promise.resolve(response);
+        return (response);
     }
 
     //per step input validation, empty returns are a pass
@@ -86,7 +86,6 @@ module.exports = class ConversationCommand extends Context {
                 else{
                     return;
                 };
-                break;
             case this.steps.OPERATOR:
                 switch(item){
                     case '+':
@@ -94,14 +93,11 @@ module.exports = class ConversationCommand extends Context {
                     case '*':
                     case '/':
                         return;
-                        break;
                     default:
                         return("Invalid operator!");
                 };
-                break;
             default:
                 return;
-                break;
         }
     }
 
