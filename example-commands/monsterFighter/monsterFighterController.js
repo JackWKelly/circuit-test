@@ -6,11 +6,13 @@ const services = require('./monsterFighterServices');
 
 exports = module.exports = {};
 
+//object that contains the string to output to the user and any step state changes to be done
 exports.stepResponse = {
     textOutput: String,
     stepChange: Number
 };
 
+//psuedo enum that maps step numbers to descriptive text
 exports.steps = {
     COMPLETE: -1,
     WELCOME: 0,
@@ -30,10 +32,12 @@ exports.welcome = function(){
     return result;
 };
 
-exports.gameSelect = function(itemArr){
+exports.gameSelect = async function(itemArr){
     let result = this.stepResponse;
     switch (itemArr[0]) {
         case "view":
+            result = await this.viewUser(itemArr);
+            break;
         case "battle":
             result.textOutput = "view/battle";
             break;
@@ -52,5 +56,13 @@ exports.newUser = async function(itemArr){
     let result = this.stepResponse
     await services.addAdventurer(itemArr[0]);
     result.textOutput = await services.readAdventurerName(itemArr[0]);
+    result.stepChange = this.steps.GAMESELECT;
+    return result;
+}
+
+exports.viewUser = async function(itemArr){
+    let result = this.stepResponse
+    let dataResponse = await services.readAdventurerName(itemArr[1]);
+    result.textOutput = JSON.stringify(dataResponse);
     return result;
 }

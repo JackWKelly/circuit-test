@@ -63,10 +63,6 @@ module.exports = class ConversationCommand extends Context {
             return (validErr);
         };
 
-        //value outputted to the user at the end of the function
-        //assigned by controller functions
-        let response = null;
-
         //object that contains the string to output to the user and any step state changes to be done
         let controllerOutput = controller.stepResponse;
 
@@ -76,34 +72,33 @@ module.exports = class ConversationCommand extends Context {
                 controllerOutput = controller.welcome();
                 break;
             case this.steps.GAMESELECT:
-                controllerOutput = controller.gameSelect(this.itemArr);
+                controllerOutput = await controller.gameSelect(this.itemArr);
                 break;
             case this.steps.NEWUSER:
                 controllerOutput = await controller.newUser(this.itemArr)
                 break;
+            //if an error brings in an invalid step output it and end the conversation
             default:
                 response = "You find yourself in a unknown, scary place. How did you get here? Current Step: " + this.step;
                 this.step = this.steps.COMPLETE;
                 break;
         };
 
-        //set the response and step from the controller output
-        response = controllerOutput.textOutput;
+        //set the step from the controller output
         if (controllerOutput.stepChange){
             this.step = controllerOutput.stepChange;
         };
 
         // Return the response
-        return (response);
+        return (controllerOutput.textOutput);
     }
 
     //per step input validation, empty returns are a pass
     //returned strings are outputted to the user
-    //not sure if the redundant 'breaks' should be kept
     validate() {
         switch (this.step) {
             case this.steps.GAMESELECT:
-                //check string after the '!mf'
+                //check the first word
                 switch (this.itemArr[0]) {
                     //commands that need a name following them
                     case "view":
