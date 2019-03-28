@@ -1,3 +1,4 @@
+"use strict";
 const axios = require("axios");
 const url = "http://worldtimeapi.org/api/timezone/Europe/London.txt";
 const Context = require('./context')

@@ -1,3 +1,4 @@
+"use strict";
 var exports = module.exports = {}
 
 var Promise = require("bluebird");
@@ -43,7 +44,7 @@ exports.respond = (client, item) => {
     if (client.loggedOnUser.userId !== item.creatorId) {
 
         // First, check if the user has an active context
-        currentContext = getUserContext(item.creatorId);
+        let currentContext = getUserContext(item.creatorId);
 
         if (!currentContext) {
             // If there is no active context - we will create a context based on the command
