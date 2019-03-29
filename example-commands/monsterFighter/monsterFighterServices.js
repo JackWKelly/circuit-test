@@ -20,34 +20,23 @@ exports.adventurerModel = {
     name: String,
     exp: Number,
 
-    //not sure if functions can be embedded in objects like this
+    //calculates level from exp
+    //not sure if functions should be embedded in objects like this
     level: function () {
-        if (!exp) {
+        if (!this.exp) {
             return 0;
         };
-        //no formula for this so oh boy
-        switch (exp) {
-            case exp > 64000:
-                return 10;
-            case exp > 48000:
-                return 9;
-            case exp > 34000:
-                return 8;
-            case exp > 23000:
-                return 7;
-            case exp > 14000:
-                return 6;
-            case exp > 6500:
-                return 5;
-            case exp > 2700:
-                return 4;
-            case exp > 900:
-                return 3;
-            case exp > 300:
-                return 2;
-            default:
-                return 1;
-        };
+        //this can't work decently in a switch statement so time for 'if else' hell
+        if (this.exp > 64000) { return 10; }
+        else if (this.exp > 48000) { return 9; }
+        else if (this.exp > 34000) { return 8; }
+        else if (this.exp > 23000) { return 7; }
+        else if (this.exp > 14000) { return 6; }
+        else if (this.exp > 6500) { return 5; }
+        else if (this.exp > 2700) { return 4; }
+        else if (this.exp > 900) { return 3; }
+        else if (this.exp > 300) { return 2; }
+        else { return 1 };
     }
 };
 
@@ -56,7 +45,7 @@ exports.readAdventurerName = function (input) {
         .then((docs) => {
             console.log("DB Read:");
             console.log(docs);
-            return(docs);
+            return (docs);
         })
         .catch((err) => {
             console.log(err);
@@ -74,15 +63,15 @@ exports.addAdventurer = function (advInput) {
     adventurer.exp = 0;
 
     return Promise.fromCallback((callback) => db.collection("adventurers").insertOne(adventurer, callback))
-    .then((r) => {
-        assert.equal(1, r.insertedCount);
-        console.log("DB Write:");
-        console.log(r);
-        return(r);
-    })
-    .catch((err) => {
-        console.log(err);
-    });
+        .then((r) => {
+            assert.equal(1, r.insertedCount);
+            console.log("DB Write:");
+            console.log(r);
+            return (r);
+        })
+        .catch((err) => {
+            console.log(err);
+        });
 
 
 };

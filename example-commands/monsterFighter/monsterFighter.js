@@ -45,7 +45,7 @@ module.exports = class ConversationCommand extends Context {
         this.itemArr = null;
 
 
-    }
+    };
 
     //sends input to be validated
     //invokes relevant monsterFighterController function based on step state
@@ -85,13 +85,13 @@ module.exports = class ConversationCommand extends Context {
         };
 
         //set the step from the controller output
-        if (controllerOutput.stepChange){
+        if (controllerOutput.stepChange) {
             this.step = controllerOutput.stepChange;
         };
 
         // Return the response
         return (controllerOutput.textOutput);
-    }
+    };
 
     //per step input validation, empty returns are a pass
     //returned strings are outputted to the user
@@ -131,5 +131,5 @@ module.exports = class ConversationCommand extends Context {
 
     isConversationEnded() {
         return this.step === this.steps.COMPLETE;
-    }
-}
+    };
+};
