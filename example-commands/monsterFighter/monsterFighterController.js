@@ -22,6 +22,7 @@ exports.steps = {
     RESULTS: 4
 };
 
+//welcome message
 exports.welcome = function(){
     let result = this.stepResponse;
     result.textOutput = "Welcome to Monster Fighter. The commands are as follows, be sure to prefix all commands with !mf:<hr>" +
@@ -32,6 +33,7 @@ exports.welcome = function(){
     return result;
 };
 
+//moves user to the desired game function, "view" is done here as it's just a one liner
 exports.gameSelect = async function(itemArr){
     let result = this.stepResponse;
     switch (itemArr[0]) {
@@ -52,6 +54,7 @@ exports.gameSelect = async function(itemArr){
     return result;
 };
 
+//adds a new adventurer with a unique name
 exports.newUser = async function(itemArr){
     let result = this.stepResponse;
     let users = await services.readAdventurerName(itemArr[0]);
@@ -67,6 +70,7 @@ exports.newUser = async function(itemArr){
     return result;
 }
 
+//return adventurers that match the inputted name
 exports.viewUser = async function(itemArr){
     let result = this.stepResponse
     let dataResponse = await services.readAdventurerName(itemArr[1]);
