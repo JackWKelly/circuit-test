@@ -53,9 +53,16 @@ exports.gameSelect = async function(itemArr){
 };
 
 exports.newUser = async function(itemArr){
-    let result = this.stepResponse
-    await services.addAdventurer(itemArr[0]);
-    result.textOutput = await services.readAdventurerName(itemArr[0]);
+    let result = this.stepResponse;
+    let users = await services.readAdventurerName(itemArr[0]);
+
+    if (users.length === 0){
+        await services.addAdventurer(itemArr[0]);
+        result.textOutput = "Success! Returning to game select."
+    } else {
+        result.textOutput = "Error! Adventurer already exists. Returning to game select."
+    }
+
     result.stepChange = this.steps.GAMESELECT;
     return result;
 }
